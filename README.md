@@ -9,13 +9,13 @@ This is a very basic visual introduction to the concepts behind a public / priva
 Get the code:
 
 ```
-git clone https://github.com/anders94/public-key-private-key-demo.git
+git clone https://github.com/anders94/public-private-key-demo.git
 ```
 
 Install dependencies:
 
 ```
-cd public-key-private-key-demo
+cd public-private-key-demo
 npm install
 ```
 Run the server:
