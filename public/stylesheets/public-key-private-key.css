@@ -1,0 +1,55 @@
+html {
+  position: relative;
+  min-height: 100%;
+  height: 100%;
+}
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  min-height: 75rem;
+  padding-top: 4.5rem;
+}
+
+body > .container {
+  padding: 0 15px 0;
+}
+
+.container .text-muted {
+  margin: 20px 0;
+}
+
+body > .container-fluid {
+  padding: 0 15px 0;
+}
+
+.container-fluid .text-muted {
+  margin: 20px 0;
+}
+
+input {
+  font-family: monospace;
+}
+
+.card-success {
+  background: rgb(216, 240, 223);
+}
+
+.card-error {
+  background: rgb(220, 220, 250);
+}
+
+.sig-success {
+  background: rgb(223, 240, 216);
+}
+
+.card-error {
+  background: rgb(250, 220, 220);
+}
+
+.github-ribbon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  z-index: 20000;
+}

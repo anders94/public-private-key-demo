@@ -1,0 +1,97 @@
+extends layout
+
+block content
+  .container
+    .card
+      .card-header
+        h4 Encryption
+        ul.nav.nav-tabs.card-header-tabs#myTab(role='tablist')
+          li.nav-item
+            a.nav-link.active#encrypt-tab(data-toggle='tab', href='#encrypt', role='tab', aria-controls='encrypt', aria-selected='true') Encrypt
+          li.nav-item
+            a.nav-link#decrypt-tab(data-toggle='tab', href='#decrypt', role='tab', aria-controls='decrypt', aria-selected='false') Decrypt
+      .card-body
+        .tab-content#myTabContent
+          .tab-pane.show.active#encrypt(role='tabpanel', aria-labelledby='encrypt-tab')
+            form.form-horizontal
+              .form-group
+                label.control-label(for='data') Message
+                textarea.form-control#encrypt-message(rows=5, aria-label='Message')
+              .form-group
+                label.control-label(for='data') Public Key
+                .input-group
+                  input#publicKey.form-control
+                  span.input-group-btn
+                    button#encrypt-button.btn.btn-primary(type='button') Encrypt
+              .form-group
+                label.control-label(for='data') Encrypted Message
+                textarea#encrypted.form-control(rows=5, aria-label='Encrypted Message', disabled)
+          .tab-pane#decrypt(role='tabpanel', aria-labelledby='decrypt-tab')
+            form.form-horizontal
+              .form-group
+                label.control-label(for='data') Encrypted Message
+                textarea.form-control#encrypted-message('rows=5', aria-label='Encrypted Message')
+              .form-group
+                label.control-label(for='data') Private Key
+                .input-group
+                  input#privateKey.form-control
+                  span.input-group-btn
+                    button#decrypt-button.btn.btn-primary(type='button') Decrypt
+              .form-group
+                label.control-label(for='data') Decrypted Message
+                textarea#decrypted-message.form-control('rows=5', aria-label='Decrypted Message', disabled)
+
+  script.
+    var EC = elliptic.elliptic().ec;
+    var ec = new EC('secp256k1');
+
+    var keypair = ec.genKeyPair();
+    if (Cookies.get('privateKey')) {
+      keypair = ec.keyFromPrivate(Cookies.get('privateKey'));
+    }
+
+    function update() {
+      var prv = keypair.getPrivate('hex');
+      var pub = keypair.getPublic('hex');
+      $('#privateKey').val(bigInt(prv, 16).toString());
+      $('#publicKey').val(pub);
+      Cookies.set('privateKey', prv.toString());
+      Cookies.set('publicKey', pub);
+    }
+
+    $(function() {
+      $('#encrypt-button').click(function() {
+        var binaryMessage = buffer.Buffer.from($('#sign-message').val());
+        var hexSignature = buffer.Buffer.from(keypair.sign(binaryMessage).toDER()).toString('hex');
+        $('#sign-signature').val(hexSignature);
+        $('#verify-signature').val(hexSignature);
+      });
+      $('#verify-button').click(function() {
+        var binaryMessage = buffer.Buffer.from($('#verify-message').val());
+        if (keypair.verify(binaryMessage, $('#verify-signature').val())) {
+          $('#verify-signature').addClass('alert-success');
+        }
+        else {
+          $('#verify-signature').addClass('alert-danger');
+        }
+      });
+      $('#privateKey').bind('keyup', function() {
+        $('#privateKey').val($('#privateKey').val().replace(/\D/g, ''));
+        keypair = ec.keyFromPrivate(bigInt($('#privateKey').val()).toString(16));
+        resetVerifier();
+        update();
+      });
+      if (Cookies.get('message')) {
+        $('#sign-message').val(Cookies.get('message'));
+        $('#verify-message').val(Cookies.get('message'));
+      }
+      $('#sign-message').bind('keyup', function() {
+        Cookies.set('message', $('#sign-message').val());
+        $('#verify-message').val($('#sign-message').val());
+      });
+      $('#verify-message').bind('keyup', function() {
+        Cookies.set('message', $('#verify-message').val());
+        $('#sign-message').val($('#verify-message').val());
+      });
+      update();
+    });

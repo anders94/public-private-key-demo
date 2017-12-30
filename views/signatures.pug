@@ -1,0 +1,129 @@
+extends layout
+
+block content
+  .container
+    .card
+      .card-header
+        h4 Signatures
+        ul.nav.nav-tabs.card-header-tabs#myTab(role='tablist')
+          li.nav-item
+            a.nav-link.active#sign-tab(data-toggle='tab', href='#sign', role='tab', aria-controls='sign', aria-selected='true') Sign
+          li.nav-item
+            a.nav-link#verify-tab(data-toggle='tab', href='#verify', role='tab', aria-controls='verify', aria-selected='false') Verify
+      .card-body#card
+        .tab-content#myTabContent
+          .tab-pane.show.active#sign(role='tabpanel', aria-labelledby='sign-tab')
+            form.form-horizontal
+              .form-group
+                label.control-label(for='data') Message
+                textarea.form-control#sign-message('rows=5', aria-label='Message')
+              .form-group
+                label.control-label(for='data') Private Key
+                input#privateKey.form-control
+              .form-group
+                button#sign-button.btn.btn-block.btn-primary(type='button') Sign
+              .form-group
+                label.control-label(for='data') Message Signature
+                input#sign-signature.form-control(disabled)
+          .tab-pane#verify(role='tabpanel', aria-labelledby='verify-tab')
+            form.form-horizontal
+              .form-group
+                label.control-label(for='data') Message
+                textarea.form-control#verify-message('rows=5', aria-label='Message')
+              .form-group
+                label.control-label(for='data') Public Key
+                input#publicKey.form-control
+              .form-group
+                label.control-label(for='data') Signature
+                input#verify-signature.form-control
+              .form-group
+                button#verify-button.btn.btn-block.btn-primary(type='button') Verify
+
+  script.
+    var EC = elliptic.elliptic().ec;
+    var ec = new EC('secp256k1');
+
+    var keypair = ec.genKeyPair();
+    if (Cookies.get('privateKey')) {
+      keypair = ec.keyFromPrivate(Cookies.get('privateKey'));
+    }
+
+    function update() {
+      var prv = keypair.getPrivate('hex');
+      var pub = keypair.getPublic('hex');
+      $('#privateKey').val(bigInt(prv, 16).toString());
+      $('#publicKey').val(pub);
+      Cookies.set('privateKey', prv.toString());
+      Cookies.set('publicKey', pub);
+    }
+
+    function resetVerifier() {
+      $('#card').removeClass('alert-success');
+      $('#card').removeClass('alert-danger');
+    }
+
+    $(function() {
+      $('#sign-button').click(function() {
+        var binaryMessage = buffer.Buffer.from($('#sign-message').val());
+        var hexSignature = buffer.Buffer.from(keypair.sign(binaryMessage).toDER()).toString('hex');
+        $('#sign-signature').val(hexSignature);
+        $('#verify-signature').val(hexSignature);
+        update();
+        resetVerifier();
+      });
+      $('#verify-button').click(function() {
+        // verify by using only the public key
+        $('#publicKey').val($('#publicKey').val().replace(/[^0-9a-fA-F]/g, ''));
+        var tmpKey;
+        try {
+          tmpKey = ec.keyFromPublic($('#publicKey').val(), 'hex');
+          var binaryMessage = buffer.Buffer.from($('#verify-message').val());
+          if (tmpKey.verify(binaryMessage, $('#verify-signature').val())) {
+            $('#card').addClass('alert-success');
+          }
+          else {
+            $('#card').addClass('alert-danger');
+          }
+        }
+        catch(e) {
+          $('#card').addClass('alert-danger');
+        }
+      });
+      $('#sign-signature').bind('keyup', function() {
+        resetVerifier();
+      });
+      $('#sign-message').bind('keyup', function() {
+        resetVerifier();
+      });
+      $('#verify-signature').bind('keyup', function() {
+        resetVerifier();
+      });
+      $('#verify-message').bind('keyup', function() {
+        resetVerifier();
+      });
+      $('#publicKey').bind('keyup', function() {
+        resetVerifier();
+      });
+      $('#privateKey').bind('keyup', function() {
+        $('#privateKey').val($('#privateKey').val().replace(/\D/g, ''));
+        keypair = ec.keyFromPrivate(bigInt($('#privateKey').val()).toString(16));
+        resetVerifier();
+        update();
+      });
+      if (Cookies.get('message')) {
+        $('#sign-message').val(Cookies.get('message'));
+        $('#verify-message').val(Cookies.get('message'));
+      }
+      $('#sign-message').bind('keyup', function() {
+        Cookies.set('message', $('#sign-message').val());
+        $('#verify-message').val($('#sign-message').val());
+      });
+      $('#verify-message').bind('keyup', function() {
+        Cookies.set('message', $('#verify-message').val());
+        $('#sign-message').val($('#verify-message').val());
+      });
+      $('#myTab').on('shown.bs.tab', function (e) {
+        resetVerifier();
+      });
+      update();
+    });

@@ -1,0 +1,43 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='Public / private key pair demo in a browser.')
+    meta(name='author', content='Anders Brownworth')
+    link(rel='icon', href='/favicon.ico')
+
+    title Blockchain Demo: Public / Private Keys &amp; Signing
+
+    link(rel='stylesheet', href='/stylesheets/lib/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/public-key-private-key.css')
+
+    script(src='/javascripts/lib/jquery.min.js')
+    script(src='/javascripts/lib/popper.min.js')
+    script(src='/javascripts/lib/bootstrap.min.js')
+    script(src='/javascripts/lib/js.cookie.min.js')
+    script(src='/javascripts/lib/BigInteger.min.js')
+    script(src='/javascripts/lib/Buffer.js')
+    script(src='/javascripts/lib/elliptic.js')
+    script(src='/javascripts/lib/spin.min.js')
+    script(src='/javascripts/lib/ladda.min.js')
+    script(src='/javascripts/lib/sha256.js')
+    script(src='/javascripts/blockchain.js')
+
+  body
+    nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
+      a.navbar-brand(href='/') Blockchain Demo: Public / Private Keys &amp; Signing
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#collapsingNavbar' aria-controls='collapsingNavbar', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      .navbar-collapse.collapse#collapsingNavbar
+        ul.navbar-nav.ml-auto
+          li.nav-item(class={active: page === 'keys'})
+            a.nav-link(href='/keys') Keys
+          li.nav-item(class={active: page === 'signatures'})
+            a.nav-link(href='/signatures') Signatures
+          li.nav-item(class={active: page === 'transaction'})
+            a.nav-link(href='/transaction') Transaction
+          li.nav-item(class={active: page === 'blockchain'})
+            a.nav-link(href='/blockchain') Blockchain
+
+    block content

@@ -1,0 +1,39 @@
+{
+  "name": "blockchain-demo",
+  "description": "A web-based demonstration of publick key / private key concepts.",
+  "author": {
+    "name": "Anders Brownworth"
+  },
+  "version": "0.0.1",
+  "keywords": [
+    "public key",
+    "private key",
+    "demo",
+    "bitcoin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anders94/public-key-private-key-demo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anders94/public-key-private-key-demo/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "async": "^1.4.2",
+    "body-parser": "~1.15.2",
+    "cookie-parser": "^1.4.3",
+    "debug": "~2.2.0",
+    "express": "^4.13.4",
+    "morgan": "^1.7.0",
+    "pug": "^2.0.0-rc.4",
+    "serve-favicon": "^2.3.0"
+  },
+  "homepage": "https://github.com/anders94/public-key-private-key-demo#readme",
+  "maintainers": [
+    {
+      "name": "anders",
+      "email": "anders-git@evantide.com"
+    }
+  ]
+}

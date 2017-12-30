@@ -1,0 +1,57 @@
+.card.card-block(id='block'+block.block+'chain'+block.chain+'card')
+  .card-body
+    form.form-horizontal
+
+      .form-group
+        label.col-sm-2.control-label(for='block'+block.block+'chain'+block.chain+'number') Block:
+        .col-sm
+          .input-group
+            span.input-group-addon #
+            input.form-control(id='block'+block.block+'chain'+block.chain+'number', type='text', value=block.block onkeyup='updateChain('+block.block+', '+block.chain+', '+block.txCount+');')
+
+      .form-group
+        label.col-sm-2.control-label(for='block'+block.block+'chain'+block.chain+'nonce') Nonce:
+        .col-sm
+           input.form-control(id='block'+block.block+'chain'+block.chain+'nonce', type='text', value=block.nonce, onkeyup='updateChain('+block.block+', '+block.chain+', '+block.txCount+');')
+
+      .form-group
+        label.col-sm-2.control-label Coinbase:
+        .col-sm
+          .input-group
+            .input-group-addon $
+            input.form-control(id='block'+block.block+'chain'+block.chain+'coinbasevalue', type='text', value=block.coinbasevalue, onkeyup='updateChain('+block.block+', '+block.chain+', '+block.txCount+');')
+            .input-group-addon -&gt;
+            input.form-control(id='block'+block.block+'chain'+block.chain+'coinbaseto', type='text', value=block.coinbaseto, onkeyup='updateChain('+block.block+', '+block.chain+', '+block.txCount+');')
+
+      .form-group
+        label.col-sm-2.control-label Tx:
+        .col-sm
+          each tx, x in block.txs
+            .input-group
+              .input-group-addon $
+              input.form-control(id='block'+block.block+'chain'+block.chain+'tx'+x+'value', type='text', value=tx.value, onkeyup='updateChain('+block.block+', '+block.chain+', '+block.txCount+');')
+              .input-group-addon From:
+              input.form-control(id='block'+block.block+'chain'+block.chain+'tx'+x+'from', type='text', value=tx.from, onkeyup='updateChain('+block.block+', '+block.chain+', '+block.txCount+');')
+              .input-group-addon -&gt;
+              input.form-control(id='block'+block.block+'chain'+block.chain+'tx'+x+'to', type='text', value=tx.to, onkeyup='updateChain('+block.block+', '+block.chain+', '+block.txCount+');')
+            .input-group
+              .input-group-addon Sig:
+              input.form-control(id='block'+block.block+'chain'+block.chain+'tx'+x+'sig', type='text', value=tx.sig, onkeyup='updateChain('+block.block+', '+block.chain+', '+block.txCount+');')
+            br
+
+      #state.form-group
+        label.col-sm-2.control-label(for='block'+block.block+'chain'+block.chain+'previous') Prev:
+        .col-sm
+          input.form-control(id='block'+block.block+'chain'+block.chain+'previous', type='text', value=block.previous)
+
+      #state.form-group
+        label.col-sm-2.control-label(for='block'+block.block+'chain'+block.chain+'hash') Hash:
+        .col-sm
+          input.form-control(id='block'+block.block+'chain'+block.chain+'hash', type='text' disabled)
+
+      .form-group
+        .col-sm-2
+          i.icon-spinner.icon-spin.icon-large
+        .col-sm
+          button.btn.btn-primary.ladda-button(id='block'+block.block+'chain'+block.chain+'mineButton', data-style='expand-right')
+            span.ladda-label Mine
