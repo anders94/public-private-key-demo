@@ -91,7 +91,7 @@ block content
       try {
         var message = $('#block'+block+'chain'+chain+'tx'+tx+'value').val() +
                       $('#block'+block+'chain'+chain+'tx'+tx+'from').val() +
-                      $('#block'+block+'chain'+chain+'tx'+tx+'from').val();
+                      $('#block'+block+'chain'+chain+'tx'+tx+'to').val();
         var binaryMessage = buffer.Buffer.from(message);
         var pubKey = ec.keyFromPublic($('#block'+block+'chain'+chain+'tx'+tx+'from').val(), 'hex');
         if (pubKey.verify(binaryMessage, $('#block'+block+'chain'+chain+'tx'+tx+'sig').val()))
