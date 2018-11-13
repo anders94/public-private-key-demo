@@ -64,7 +64,7 @@ block content
 
     $(function() {
       $('#sign-button').click(function() {
-        var binaryMessage = buffer.Buffer.from($('#sign-message').val());
+        var binaryMessage = buffer.Buffer.from(CryptoJS.SHA256($('#sign-message').val()).toString(CryptoJS.enc.Hex));
         var hexSignature = buffer.Buffer.from(keypair.sign(binaryMessage).toDER()).toString('hex');
         $('#sign-signature').val(hexSignature);
         $('#verify-signature').val(hexSignature);
@@ -77,7 +77,7 @@ block content
         var tmpKey;
         try {
           tmpKey = ec.keyFromPublic($('#publicKey').val(), 'hex');
-          var binaryMessage = buffer.Buffer.from($('#verify-message').val());
+          var binaryMessage = buffer.Buffer.from(CryptoJS.SHA256($('#verify-message').val()).toString(CryptoJS.enc.Hex));
           if (tmpKey.verify(binaryMessage, $('#verify-signature').val())) {
             $('#card').addClass('alert-success');
           }
