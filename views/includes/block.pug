@@ -35,6 +35,8 @@
               .input-group-addon -&gt;
               input.form-control(id='block'+block.block+'chain'+block.chain+'tx'+x+'to', type='text', value=tx.to, onkeyup='updateChain('+block.block+', '+block.chain+', '+block.txCount+');')
             .input-group
+              .input-group-addon Seq:
+              input.form-control.col-sm-1(id='block'+block.block+'chain'+block.chain+'tx'+x+'seq', type='text', value=tx.seq, onkeyup='updateChain('+block.block+', '+block.chain+', '+block.txCount+');')
               .input-group-addon Sig:
               input.form-control(id='block'+block.block+'chain'+block.chain+'tx'+x+'sig', type='text', value=tx.sig, onkeyup='updateChain('+block.block+', '+block.chain+', '+block.txCount+');')
             br
