@@ -23,7 +23,7 @@
     "async": "^1.4.2",
     "body-parser": "~1.15.2",
     "cookie-parser": "^1.4.3",
-    "debug": "~2.2.0",
+    "debug": ">=2.6.9",
     "express": "^4.13.4",
     "morgan": "^1.7.0",
     "pug": "^2.0.0-rc.4",
