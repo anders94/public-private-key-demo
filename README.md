@@ -1,3 +1,9 @@
+# docker
+
+```bash
+docker run --rm -p 3000:3000 frkr/public-private-key-demo
+```
+
 # Publick Key / Private Key Demo
 A web-based demonstration of public / private key pair concepts.
 
