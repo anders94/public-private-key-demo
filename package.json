@@ -4,6 +4,9 @@
   "author": {
     "name": "Anders Brownworth"
   },
+  "scripts": {
+    "start": "node ./bin/www"
+  },
   "version": "0.0.1",
   "keywords": [
     "public key",
