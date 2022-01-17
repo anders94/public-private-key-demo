@@ -4,17 +4,17 @@ block content
   .container
 
     .card
-      h4.card-header Public / Private Key Pairs
+      h4.card-header #{__('Public / Private Key Pairs')} 
       .card-body
         form.form-horizontal
           .form-group
-            label.control-label(for='data') Private Key
+            label.control-label(for='data') #{__('Private Key')} 
             .input-group
               input.form-control#privateKey(aria-label='Private Key', type='number')
               span.input-group-btn
-                button.btn.btn-secondary#randomButton(type='button', ) Random
+                button.btn.btn-secondary#randomButton(type='button', ) #{__('Random')} 
           .form-group
-            label.control-label(for='data') Public Key
+            label.control-label(for='data') #{__('Public Key')} 
             input#publicKey.form-control(disabled)
 
   script.

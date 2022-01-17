@@ -3,10 +3,10 @@ extends layout
 block content
   .container-fluid
     .row
-      h1 Blockchain
+      h1 #{__('Blockchain')} 
     - var peers = {1: 'A', 2: 'B', 3: 'C'}
     each peer, chain in peers
-      h3 Peer #{peer}
+      h3 #{__('Peer')} #{peer}
       .d-flex.flex-nowrap
         - var blocks = []
         - blocks.push({block: 1, chain: chain, nonce: 16119, coinbasevalue: '100.00', coinbaseto: '04fe1be031bc7a54d900ff062911bc4f7ba0edb39e4280268e490b79e347e3b8b0019c252aad7536ef7caeb061d558cac2eaec43ff670d76a521bec77c35751310', txs: [], previous: '0000000000000000000000000000000000000000000000000000000000000000', txCount: 0})
