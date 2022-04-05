@@ -32,5 +32,6 @@
 	"Signing": "Signing",
 	"Transaction": "Transaction",
 	"Tx": "Tx",
-	"Verify": "Verify"
+	"Verify": "Verify",
+	"Public / Private": "Public / Private"
 }
