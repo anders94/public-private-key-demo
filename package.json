@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "async": "^1.4.2",
+    "async": "^2.6.4",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.3",
     "debug": ">=2.6.9",
