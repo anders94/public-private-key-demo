@@ -30,7 +30,7 @@
     "express": "^4.19.2",
     "i18n": "0.8.3",
     "morgan": ">=1.9.1",
-    "pug": "^3.0.1",
+    "pug": "^3.0.3",
     "serve-favicon": "^2.3.0"
   },
   "homepage": "https://github.com/anders94/public-key-private-key-demo#readme",
